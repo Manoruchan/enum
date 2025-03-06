@@ -39,3 +39,4 @@ console.log(Fruits.BANANA);
 ```
 
 # LICENSE
+[MIT](https://github.com/Manoruchan/enum/blob/main/LICENSE)
