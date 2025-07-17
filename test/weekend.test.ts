@@ -1,6 +1,6 @@
 import { Enum, EnumValue } from "../src/Enum";
 
-class Weekdays extends Enum<string[]> {
+class Week extends Enum<string[]> {
     public isWeekend(day: EnumValue): boolean {
         return day === this.SAT || day === this.SUN;
     }
@@ -16,7 +16,7 @@ const days: string[] = [
     "SUN"
 ];
 
-const week = new Weekdays(...days);
+const week = new Week(...days);
 
 console.log(week.isWeekend(week.SUN)); // true
 console.log(week.isWeekend(week.TUE)); // false
