@@ -1,0 +1,34 @@
+{
+  "name": "@manoruchan/enum",
+  "version": "2.0.0",
+  "description": "A simple and flexible Enum class for JavaScript/TypeScript.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manoruchan/enum.git"
+  },
+  "keywords": [
+    "enum",
+    "dynamic-enum",
+    "utility",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Manoruchan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Manoruchan/enum/issues"
+  },
+  "homepage": "https://github.com/Manoruchan/enum#readme",
+  "devDependencies": {
+    "@types/node": "24.0.14",
+    "typescript": "5.8.3"
+  }
+}
