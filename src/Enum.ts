@@ -6,18 +6,18 @@ export interface EnumParams {
 
 export class Enum<T extends readonly (string | [string, EnumValue])[]> implements EnumParams {
     [key: string]: any;
-    private reverse: Map<EnumValue, string>;
+    private _reversed: Map<EnumValue, string>;
 
     public constructor(...args: T) {
-        this.reverse = new Map();
+        this._reversed = new Map();
 
         args.forEach((v, i) => {
             if (Array.isArray(v)) {
                 this[v[0]] = v[1];
-                this.reverse.set(v[1], v[0]);
+                this._reversed.set(v[1], v[0]);
             } else {
                 this[v] = i;
-                this.reverse.set(i, v);
+                this._reversed.set(i, v);
             }
         });
 
@@ -25,7 +25,7 @@ export class Enum<T extends readonly (string | [string, EnumValue])[]> implement
     }
 
     public get(value: EnumValue): string | undefined {
-        return this.reverse.get(value);
+        return this._reversed.get(value);
     }
 
     public valueOf(name: string): EnumValue {
