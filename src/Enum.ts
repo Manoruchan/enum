@@ -39,4 +39,8 @@ export class Enum<T extends readonly (string | [string, EnumValue])[]> implement
     public names(): string[] {
         return Object.keys(this).filter(k => k !== "_reversed");
     }
+
+    public toArray(): ([string, EnumValue])[] {
+        return this.names().map(k => [k, this[k]]);
+    }
 }
