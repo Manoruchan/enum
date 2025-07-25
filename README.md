@@ -28,20 +28,18 @@ npm install @manoruchan/enum
 ```ts
 import { Enum } from "@manoruchan/enum";
 
-const Week = new Enum(
-    "MON",
-    "TUE",
-    "WED",
-    "THU",
-    "FRI",
-    "SAT",
-    "SUN"
+const Color = new Enum(
+    "RED",
+    "GREEN",
+    "BLUE"
 );
 
-console.log(Week.MON);            // 0
-console.log(Week.valueOf("MON")); // 0
-console.log(Week.get(0));         // MON
-console.log(Week.values());       // [ 0, 1, 2, 3, 4, 5, 6 ]
+console.log(Color.RED);            // 0
+console.log(Color.valueOf("RED")); // 0
+console.log(Color.get(0));         // 'RED'
+console.log(Color.values());       // [ 0, 1, 2 ]
+console.log(Color.names());        // [ 'RED', 'GREEN', 'BLUE' ]
+console.log(Color.toArray());      // [ [ 'RED', 0 ], [ 'GREEN', 1 ], [ 'BLUE', 2 ] ]
 ```
 
 ## With Custom Values
@@ -56,8 +54,8 @@ const Fruits = new Enum(
 );
 
 console.log(Fruits.APPLE);             // red
-console.log(Fruits.valueOf("ORANGE")); // orange
-console.log(Fruits.get("yellow"));     // BANANA
+console.log(Fruits.valueOf("ORANGE")); // 'orange'
+console.log(Fruits.get("yellow"));     // 'BANANA'
 console.log(Fruits.values());          // [ 'red', 'orange', 'yellow' ]
 ```
 
@@ -78,6 +76,46 @@ const week = new Week(...days);
 console.log(week.isWeekend(week.SUN)); // true
 console.log(week.isWeekend(week.TUE)); // false
 ```
+```ts
+import { Enum, EnumValue } from "@manoruchan/enum";
+
+class Week extends Enum<string[]> {
+    public constructor() {
+        super("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN");
+    }
+
+    public isWeekend(day: EnumValue): boolean {
+        return day === this.SAT || day === this.SUN;
+    }
+}
+
+const week = new Week();
+
+console.log(week.isWeekend(week.SUN)); // true
+console.log(week.isWeekend(week.TUE)); // false
+```
+
+## EnumValue
+```ts
+type EnumValue = string | number | boolean;
+```
+EnumValue accepts primitive types.
+
+# API
+``get(value: EnumValue): string | undefined``
+Obtains the name associated with the enum value.
+
+``valueOf(name: string): EnumValue | undefined``
+Obtains the enum value from its name.
+
+``values(): EnumValue[]``
+Returns the array of enum values.
+
+``names(): string[]``
+Returns the array of the name of enum values.
+
+``toArray(): ([string, EnumValue])[]``
+Returns the entries of names and values.
 
 # LICENSE
 [MIT](https://github.com/Manoruchan/enum/blob/main/LICENSE)
