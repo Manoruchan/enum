@@ -8,6 +8,12 @@ export class Enum<T extends readonly (string | [string, EnumValue])[]> implement
     [key: string]: any;
     private _reversed: Map<EnumValue, string>;
 
+    /**
+     * @example
+     * const Color = new Enum("RED", "GREEN", "BLUE"); // Color.RED === 0, Color.GREEN === 1
+     * @example
+     * const Status = new Enum(["SUCCESS", 200], ["BAD_REQUEST", 400]); // Status.SUCCESS === 200
+     */
     public constructor(...args: T) {
         this._reversed = new Map();
 
@@ -21,25 +27,44 @@ export class Enum<T extends readonly (string | [string, EnumValue])[]> implement
             }
         });
 
-        Object.freeze(this);
+        Object.freeze(this); // make properties constant
     }
 
+    /**
+     * Obtains the name associated with the enum value.
+     * @param value The enum value.
+     * @returns The name of the enum constant, or undefined if not found.
+     */
     public get(value: EnumValue): string | undefined {
         return this._reversed.get(value);
     }
 
-    public valueOf(name: string): EnumValue {
+    /**
+     * Obtains the enum value from its name.
+     * @param name The name of enum value
+     * @returns The enum constant, or undefined if not found.
+     */
+    public valueOf(name: string): EnumValue | undefined {
         return this[name];
     }
 
+    /**
+     * @returns The array of enum values.
+     */
     public values(): EnumValue[] {
         return Object.values(this).filter(v => typeof v === "string" || typeof v === "number" || typeof v === "boolean");
     }
 
+    /**
+     * @returns The array of the name of enum values.
+     */
     public names(): string[] {
         return Object.keys(this).filter(k => k !== "_reversed");
     }
 
+    /**
+     * @returns The entries of names and values.
+     */
     public toArray(): ([string, EnumValue])[] {
         return this.names().map(k => [k, this[k]]);
     }
