@@ -6,16 +6,7 @@ class Week extends Enum<string[]> {
     }
 }
 
-const days: string[] = [
-    "MON",
-    "TUE",
-    "WED",
-    "THU",
-    "FRI",
-    "SAT",
-    "SUN"
-];
-
+const days: string[] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 const week = new Week(...days);
 
 console.log(week.isWeekend(week.SUN)); // true
