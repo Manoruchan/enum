@@ -7,7 +7,7 @@ const Color = new Enum(
 );
 
 console.log(Color.RED);            // 0
-console.log(Color.valueOf('RED')); // 0
+console.log(Color.valueOf("RED")); // 0
 console.log(Color.get(0));         // 'RED'
 console.log(Color.values());       // [ 0, 1, 2 ]
 console.log(Color.names());        // [ 'RED', 'GREEN', 'BLUE' ]
