@@ -35,4 +35,8 @@ export class Enum<T extends readonly (string | [string, EnumValue])[]> implement
     public values(): EnumValue[] {
         return Object.values(this).filter(v => typeof v === "string" || typeof v === "number" || typeof v === "boolean");
     }
+
+    public names(): string[] {
+        return Object.keys(this).filter(k => k !== "_reversed");
+    }
 }
