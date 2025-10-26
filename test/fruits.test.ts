@@ -1,10 +1,10 @@
 import { Enum } from "../src/Enum";
 
-const Fruits = new Enum(
-    ["APPLE", "red"],
-    ["ORANGE", "orange"],
-    ["BANANA", "yellow"]
-);
+const Fruits = Enum.create({
+    APPLE: "red",
+    ORANGE: "orange",
+    BANANA: "yellow"
+});
 
 console.log(Fruits.APPLE);             // red
 console.log(Fruits.valueOf("ORANGE")); // 'orange'

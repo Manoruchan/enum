@@ -1,10 +1,10 @@
 import { Enum } from "../src/Enum";
 
-const Color = new Enum(
+const Color = Enum.create([
     "RED",
     "GREEN",
     "BLUE"
-);
+] as const);
 
 console.log(Color.RED);            // 0
 console.log(Color.valueOf("RED")); // 0
