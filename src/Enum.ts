@@ -1,33 +1,52 @@
 export type EnumValue = string | number | boolean;
 
-export interface EnumParams {
-    [key: string]: EnumValue;
+type EnumKeysType<T extends readonly string[]> = {
+    [K in T[number]]: number;
 }
 
-export class Enum<T extends readonly (string | [string, EnumValue])[]> implements EnumParams {
-    [key: string]: any;
+const isRecord = <U extends Record<string, EnumValue>>(v: any): v is U => {
+    return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+export class Enum<T extends (readonly string[] | Record<string, EnumValue>) = readonly string[]> {
+    readonly [key: string]: any;
     private _reversed: Map<EnumValue, string>;
 
-    /**
-     * @example
-     * const Color = new Enum("RED", "GREEN", "BLUE"); // Color.RED === 0, Color.GREEN === 1
-     * @example
-     * const Status = new Enum(["SUCCESS", 200], ["BAD_REQUEST", 400]); // Status.SUCCESS === 200
-     */
-    public constructor(...args: T) {
+    public constructor(v: T) {
         this._reversed = new Map();
+        let resolved: Record<string, EnumValue>;
 
-        args.forEach((v, i) => {
-            if (Array.isArray(v)) {
-                this[v[0]] = v[1];
-                this._reversed.set(v[1], v[0]);
-            } else {
-                this[v] = i;
-                this._reversed.set(i, v);
-            }
+        if (Array.isArray(v)) {
+            resolved = {};
+            v.forEach((k, i) => resolved[k] = i);
+        } else if (isRecord(v)) {
+            resolved = v;
+        } else {
+            throw new TypeError("Invalid argument type");
+        }
+
+        Object.entries(resolved).forEach(([k, v]) => {
+            (this as any)[k] = v as T[keyof T];
+            this._reversed.set(v, k);
         });
 
         Object.freeze(this); // make properties constant
+    }
+
+    public static create<T extends readonly string[], C extends Enum<any>>(
+        this: new (v: T) => C,
+        v: T
+    ): C & EnumKeysType<T>;
+    public static create<T extends Record<string, EnumValue>, C extends Enum<any>>(
+        this: new (v: T) => C,
+        v: T
+    ): C & T;
+    public static create<T extends (readonly string[] | Record<string, EnumValue>), C extends Enum<any>>(
+        this: new (v: T) => C,
+        v: T
+    ): C & EnumKeysType<any> {
+        const instance = new this(v);
+        return instance as any;
     }
 
     /**
