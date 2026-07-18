@@ -1,22 +1,22 @@
 # Enum
 
+> ⚠️ **Deprecated**
+> This package is now deprecated and no longer maintained.
+>
+> Please consider to use TypeScript `enum` or `as const` object + Union-Type instead.
+
 A simple and flexible Enum class for JavaScript / TypeScript.
 
-
 `@manoruchan/enum` is an Enum class implementation
-
 that maintains your values as **constant variable** after its instantiation
-
 and supports **extension** with your own methods.
 
 ## Why use this instead of the native enum?
 
 Because `@manoruchan/enum` offers custom method definition and supports **dynamic enums**,
-
 just like Java's `Enum` class but simpler and more flexible for JavaScript / TypeScript.
 
 Furthermore, `@manoruchan/enum` now supports **full type inference and autocomplete** via the new **`Enum.create()`** static factory method.
-
 
 # Installation
 
@@ -110,15 +110,15 @@ To ensure proper type inference for array input to constructor, the argument mus
 
 ### Example (Array Input with Autocomplete)
 
- ```ts
+```ts
 // `as const` is required here
 const Status= Enum.create(["ACTIVE", "INACTIVE"] as const);
-
 console.log(Status.ACTIVE); // 0
 // without `as const`, autocomplete is not available for Status.ACTIVE
 ```
 
 ### Example (Object Input with Autocomplete)
+
 ```ts
 // as const is not required here, but recommended.
 const Fruits = Enum.create({
@@ -127,17 +127,19 @@ const Fruits = Enum.create({
     BANANA: "yellow"
 });
 // } as const);
-
 console.log(Fruits.APPLE); // red
 ```
 
 ## EnumValue
+
 ```ts
 type EnumValue = string | number | boolean;
 ```
+
 EnumValue accepts primitive types.
 
 # API
+
 ``static create(v: readonly string[] | Record<string, EnumValue>): Enum``
 Creates a type-safe Enum instance. The return type provides full autocomplete based on the input `v`.
 
@@ -157,4 +159,5 @@ Returns the array of the name of enum values.
 Returns the entries of names and values.
 
 # LICENSE
+
 [MIT](https://github.com/Manoruchan/enum/blob/main/LICENSE)
